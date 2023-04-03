@@ -13,7 +13,16 @@ screen.screensize(600, 600)
 screen.bgcolor('black')
 screen.tracer(0)
 
+game_is_on = True
+
+
+def end_game():
+    global game_is_on
+    game_is_on = False
+
+
 screen.listen()
+screen.onkey(key='q', fun=end_game)
 screen.onkey(key='w', fun=mob.move_up)
 
 car_park = []
@@ -22,9 +31,8 @@ for _ in range(1, 75, 1):
     car.create_car()
     car_park.append(car)
 
-difficulty = 1
-game_is_on = True
 
+difficulty = 1
 while game_is_on:
 
     # Setting cars in motion
