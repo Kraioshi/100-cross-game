@@ -1,22 +1,20 @@
 from turtle import Turtle, Screen
+
 from mob import Mob
 from car import Car
 from score import Score
-from board import Board
-import time
 
 mob = Mob()
 game_over = Score()
+score = Score()
 
 screen = Screen()
 screen.screensize(600, 600)
-# screen.bgpic('image.png')
 screen.bgcolor('black')
 screen.tracer(0)
 
 screen.listen()
 screen.onkey(key='w', fun=mob.move_up)
-
 
 car_park = []
 for _ in range(1, 75, 1):
@@ -24,19 +22,26 @@ for _ in range(1, 75, 1):
     car.create_car()
     car_park.append(car)
 
-
+difficulty = 1
 game_is_on = True
+
 while game_is_on:
 
     # Setting cars in motion
     for cars in car_park:
         cars.move_car()
 
+    # Scoreboard
+    score.update_score(difficulty)
+
     # level up
     if mob.ycor() >= 280:
         for car in car_park:
             car.level_up()
         mob.goto(0, -290)
+        difficulty += 1
+        score.update_score(difficulty)
+        print('dif_update', difficulty)
 
     # Respawning cars
     for car in car_park:
@@ -50,17 +55,11 @@ while game_is_on:
             car.level = current_level
             car_park.append(car)
 
-
     # collision with cars:
     for cars in car_park:
         if mob.distance(cars) < 25:
             game_over.game_over()
             game_is_on = False
 
-
     screen.update()
-
-
-
-
 screen.exitonclick()
