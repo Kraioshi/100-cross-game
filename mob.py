@@ -10,7 +10,8 @@ class Mob(Turtle):
         self.penup()
         self.speed(0)
         self.setheading(90)
-        self.goto(x=0, y=-290)
+        self.goto(0, -290)
 
     def move_up(self):
         self.forward(30)
+
